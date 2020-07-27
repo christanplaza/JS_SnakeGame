@@ -12,23 +12,63 @@
         
         var width = 500;
         var height = 500;
+        var snakeList, foodList;
 
-        // ctx.font = "20px Calibri"; For windows/mac
         ctx.font = "20px Ubuntu";
 
-        // The snake body will be duplicated, like connected boxes as the 'snake' itself. Basically a snake is an array of snake bodies
         var snakeBody = {
             width: 20,
             height: 20,
             color: 'green'
         };
 
-        // We only put the persistent data inside the object. X & Y always changes so we don't set that as a property of the object.
         var food = {
             width: 20,
             height: 20,
             color: 'orange'
         };
+
+        drawSnake = function(sb, i) {
+            ctx.save();
+
+            // To check if the snake body is the 'head', we give it a different color so that the user can tell.
+            if (i == 0)
+                ctx.fillStyle = 'black';
+            else 
+                ctx.fillStyle = snakeBody.color;
+
+            ctx.fillRect(sb.x, sb.y, snakeBody.width, snakeBody.height);
+
+            ctx.restore();
+        }
+
+        drawFood = function(f, i) {
+            ctx.save();
+
+            ctx.fillStyle = food.color;
+            ctx.fillRect(f.x, f.y, food.width, food.height);
+
+            ctx.restore();
+        }
+
+        // Entry point of the game
+        startGame = function() {
+
+            // Our snake has 3 body at the beginning
+            snakeList = [
+                {x: 220, y: 200},
+                {x: 210, y: 200},
+                {x: 200, y: 200}
+            ];
+
+            // We will not set the first position because we want it to be randomized. So we will set it later.
+            foodList = [];
+
+            // Will go through the snakeList array, and run the drawSnake function for each value.
+            snakeList.forEach(drawSnake);
+        }
+
+        startGame();
     </script>
 </body>
 </html>
