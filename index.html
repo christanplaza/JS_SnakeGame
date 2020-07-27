@@ -12,7 +12,7 @@
         
         var WIDTH = 500;
         var HEIGHT = 500;
-        var snakeList, foodList, direction, eaten;
+        var snakeList, foodList, direction, eaten, intervalVar;
 
         ctx.font = "20px Ubuntu";
 
@@ -54,6 +54,13 @@
                     (rect2.x <= rect1.x + snakeBody.width) &&
                     (rect1.y <= rect2.y + food.height) &&
                     (rect2.y <= rect1.y + snakeBody.height));
+        }
+
+        testSnakeCollision = function(snake1, snake2) {
+            return (
+                (Math.abs(snake1.x - snake2.x) < 10) &&
+                (Math.abs(snake1.y - snake2.y) < 10)
+            );
         }
 
         drawSnake = function(sb, i) {
@@ -127,6 +134,19 @@
             }
         }
 
+        isGameOver = function() {
+            for (i in snakeList) {
+                // We want to skip the snake head, since we want to see if it is touching the other snake body.
+                if (i == 0) {
+                    continue;
+                }
+                if (testSnakeCollision(snakeList[0], snakeList[i])) {
+                    clearInterval(intervalVar);
+                    return;
+                }
+            }
+        }
+
         updateSnakePosition = function() {
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             while (eaten) {
@@ -160,7 +180,7 @@
                 }
                 snakeList.unshift({x: new_x, y: new_y})
             }
-
+            isGameOver();
             checkSnakePosition();
             updateSnakeList();
         }
@@ -176,7 +196,7 @@
             foodList = [];
             direction = 99;
             eaten = true;
-            setInterval(updateSnakePosition, 50)
+            intervalVar = setInterval(updateSnakePosition, 50)
         }
 
         startGame();
