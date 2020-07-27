@@ -9,8 +9,26 @@
     <canvas height="500" width="500" id="ctx" style="border: 2px solid #000"/>
     <script>
         var ctx = document.getElementById('ctx').getContext('2d');
+        
+        var width = 500;
+        var height = 500;
 
-        ctx.fillText("This is working", 100, 200);
+        // ctx.font = "20px Calibri"; For windows/mac
+        ctx.font = "20px Ubuntu";
+
+        // The snake body will be duplicated, like connected boxes as the 'snake' itself. Basically a snake is an array of snake bodies
+        var snakeBody = {
+            width: 20,
+            height: 20,
+            color: 'green'
+        };
+
+        // We only put the persistent data inside the object. X & Y always changes so we don't set that as a property of the object.
+        var food = {
+            width: 20,
+            height: 20,
+            color: 'orange'
+        };
     </script>
 </body>
 </html>
