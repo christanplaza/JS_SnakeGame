@@ -28,12 +28,7 @@
             color: 'orange'
         };
 
-        document.onkeydown = function(event) {
-            // 0 - Left
-            // 1 - Up
-            // 2 - Right
-            // 3 - Down
-            
+        document.onkeydown = function(event) {            
             if (event.keyCode == 37) {
                 direction = 0;
                 console.log('0');
@@ -78,16 +73,13 @@
 
         updateSnakeList = function() {
             for (var i = snakeList.length-1; i >= 0; i--) {
-                // Left key is pressed.
                 if (direction == 0) {
-                    // To check if the current snakeBody is the head. 
                     if (i == 0) {
                         snakeList[i].x = snakeList[i].x - 20;
                     } else {
                         snakeList[i].x = snakeList[i-1].x;
                         snakeList[i].y = snakeList[i-1].y;
                     }
-                // Up key is pressed
                 } else if (direction == 1) {
                     if (i == 0) {
                         snakeList[i].y = snakeList[i].y - 20;
@@ -95,7 +87,6 @@
                         snakeList[i].x = snakeList[i-1].x;
                         snakeList[i].y = snakeList[i-1].y;
                     }
-                // Right key is pressed
                 } else if (direction == 2) {
                     if (i == 0) {
                         snakeList[i].x = snakeList[i].x + 20;
@@ -103,7 +94,6 @@
                         snakeList[i].x = snakeList[i-1].x;
                         snakeList[i].y = snakeList[i-1].y;
                     }
-                // Down key is pressed
                 } else if (direction == 3) {
                     if (i == 0) {
                         snakeList[i].y = snakeList[i].y + 20;
@@ -115,9 +105,25 @@
             }
         }
 
+        checkSnakePosition = function() {
+            if (snakeList[0].x > 500) {
+                snakeList[0].x = 0;
+            }
+            if (snakeList[0].x < 0) {
+                snakeList[0].x = 500;
+            }
+            if (snakeList[0].y > 500) {
+                snakeList[0].y = 0;
+            }
+            if (snakeList[0].y < 0) {
+                snakeList[0].y = 500;
+            }
+        }
+
         updateSnakePosition = function() {
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             snakeList.forEach(drawSnake);
+            checkSnakePosition();
             updateSnakeList();
         }
 
